@@ -18,10 +18,14 @@ public class common_class {
 
 	File appDir = new File("src");
 
-	File app = new File(appDir, "NDCMFI_4.1.0.607_beta.apk");
+	//File app = new File(appDir, "NDCMFI_4.1.0.607_beta.apk");
+	
+	//Use below apk file when running on real device
+	File app = new File(appDir, "NDCMFI_4.2.0.634_beta.apk");
+	
 	//File app = new File(appDir, "NDCMFI_3.28.0.593_beta.apk");
-	//dc.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Device");
-	dc.setCapability(MobileCapabilityType.DEVICE_NAME,"Pixel4_emulator");
+	dc.setCapability(MobileCapabilityType.DEVICE_NAME,"Android Device");
+	//dc.setCapability(MobileCapabilityType.DEVICE_NAME,"Pixel4_emulator");
 
 	dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,"uiautomator2");//new step
 

@@ -7,7 +7,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.DesiredCapabilities;
+import org.junit.Assert;
 
 import io.appium.java_client.PerformsTouchActions;
 import io.appium.java_client.TouchAction;
@@ -31,10 +31,11 @@ public class login extends common_class {
 		
 		
 		try {
-			WebElement panel;
-		panel=driver.findElement(By.id("fi.nordea.sme.beta:id/whats_new_container"));
-		//panel=driver.findElement(By.id("fi.nordea.sme.beta:id/whats_new_image"));
-		Boolean panelResult= panel.isDisplayed();
+			WebElement panel1, panel2;
+		panel1=driver.findElement(By.id("fi.nordea.sme.beta:id/whats_new_container"));
+		panel2= driver.findElement(By.id("fi.nordea.sme.beta:id/navigation_content_frame"));
+		//panel2=driver.findElement(By.id("fi.nordea.sme.beta:id/whats_new_image"));
+		Boolean panelResult= panel1.isDisplayed();
 					
 
 		//swipe if welcome pages are displayed
@@ -45,14 +46,18 @@ public class login extends common_class {
 		}*/
 		
 		int i=1;
-		while ( i<8) {
-			SwipeScreen(panel, driver);
-			if (i==7) {
+		while ( i<3) {
+			SwipeScreen(panel1, driver);
+			if (i==3) {
 				break;
 			}
 			System.out.println("Swipe Method executed "+i+ "time");
 		i++;	
 		}
+		
+		//System.out.print(driver.getPageSource());
+		
+		SwipeScreen(panel2, driver);
 		
 		
 }
@@ -65,7 +70,7 @@ catch( Exception e) {
      System.out.println("Swipe method executed sucessfully!");
        AppEntry(driver);
        driver.quit();
-       driver.resetApp();
+      // driver.resetApp();
 		}
 
 		public static void SwipeScreen(WebElement el, WebDriver driver) throws InterruptedException {
@@ -100,7 +105,7 @@ catch( Exception e) {
 			try {
 				//driver.findElementById("fi.nordea.sme.beta:id/ncc_button").click();
 				driver.findElementByXPath("//android.widget.Button[@text='Log in']").click();
-				Thread.sleep(9000);
+				Thread.sleep(8000);
 				
 				//Login to appcenter.ms 
 				WebElement appcenterpage=driver.findElementByXPath("//android.view.View[@content-desc='Google']");
@@ -110,7 +115,8 @@ catch( Exception e) {
 				
 				driver.findElementByXPath("//android.view.View[@content-desc='Google']").click();
 				driver.findElementByXPath("//android.view.View[@content-desc='Hemlata Shinde hemlatagorde26@gmail.com']").click();
-				Thread.sleep(8000);
+				driver.findElementByXPath("//android.view.View[@content-desc='Hemlata Shinde hemlatagorde26@gmail.com']").click();
+				Thread.sleep(5000);
 				}
 				
 				else 
@@ -168,23 +174,51 @@ catch( Exception e) {
 driver.findElementByXPath("//android.widget.Button[@text='Code calculator']").click();
 driver.findElementById("fi.nordea.sme.beta:id/input_editfield").click();
 driver.findElementById("fi.nordea.sme.beta:id/input_editfield").sendKeys("402727");
+driver.findElementByXPath("//android.widget.Button[@text='Login with Code calculator']").click();
 
 System.out.print("Username entered successfully !");
 
-driver.findElementByXPath("//android.widget.Button[@text='Login with Code calculator']").click();
+/*Alert alert = driver.switchTo().alert();
+alert.dismiss();*/
 
-driver.findElementByXPath("//android.widget.TextView[@text='Autofill code']").click();
-driver.findElementByXPath("//android.widget.Button[@text='Never']").click();
 
-driver.findElementById("fi.nordea.sme.beta:id/textinput_placeholder").click();
+//driver.findElementByXPath("//android.widget.TextView[@text='Autofill code']").click();
+//driver.findElementByXPath("//android.widget.Button[@text='CANCEL']").click();
+Thread.sleep(3000);
+driver.findElementById("fi.nordea.sme.beta:id/input_editfield").sendKeys("000000000");
+driver.hideKeyboard();
 
-driver.findElementById("fi.nordea.sme.beta:id/textinput_placeholder").sendKeys("000000000");
+ 
+//driver.findElementByXPath("//android.widget.Button[@text='Never']").click(); 
 
-System.out.print("Response Code Enetered successfully !");
-		
+
+
+/*Actions act= new Actions(driver);
+WebElement response_code= driver.findElementById("fi.nordea.sme.beta:id/textinput_placeholder");
+act.doubleClick(response_code).perform();*/
+
+/*Using javascriptExecutor to forcefully enter value in Response code field
+WebElement response_code= driver.findElementById("fi.nordea.sme.beta:id/textinput_placeholder");
+JavascriptExecutor js = (JavascriptExecutor) driver;
+js.executeScript("arguments[0].value=arguments[1]",response_code,"000000000");*/
+
+
+//driver.findElementById("fi.nordea.sme.beta:id/ncc_button").click();
 driver.findElementByXPath("//android.widget.Button[@text='OK']").click();
+System.out.println("Response Code Enetered successfully !");
 
 Thread.sleep(3000);
+
+driver.findElementByXPath("//android.widget.Button[@text='Skip']").click();
+Thread.sleep(8000);
+
+//check if overview page displayed
+
+String Overview_page_title = driver.findElementByXPath("//android.widget.TextView[@text='Overview']").getText();
+
+Assert.assertEquals(Overview_page_title,"Overview");
+
+
 
 	}
 							
